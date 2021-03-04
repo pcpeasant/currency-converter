@@ -6,7 +6,7 @@ qtcreator_file = "gui.ui"
 Ui_MainWindow, QtBaseClass = uic.loadUiType(qtcreator_file)
 
 response = requests.get('https://api.exchangeratesapi.io/latest').json()
-currencys = sorted(list(response['rates'].keys()))
+currencies = sorted(list(response['rates'].keys()))
 
 
 class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -14,8 +14,8 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtWidgets.QMainWindow.__init__(self)
         Ui_MainWindow.__init__(self)
         self.setupUi(self)
-        self.inputCurrency.addItems(currencys)
-        self.outputCurrency.addItems(currencys)
+        self.inputCurrency.addItems(currencies)
+        self.outputCurrency.addItems(currencies)
 
         self.swapButton.clicked.connect(self.swap_values)
         self.inputBox.valueChanged.connect(self.convert_currency)
@@ -35,7 +35,7 @@ class MyWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         inputrate = response['rates'][inputcurr]
         outputrate = response['rates'][outputcurr]
         result = (value / inputrate) * outputrate
-        result = str(round(result, 2))
+        result = str(round(result, 3))
         self.outputBox.setText(result)
 
 
